@@ -1,0 +1,225 @@
+%---------------------------------------------------------------------------------------------------
+% Design
+%---------------------------------------------------------------------------------------------------
+\newpage
+\chapter{Design}
+
+In this chapter, the design process of the effect unit is described.
+Before the single parts of the device are developed, a thorough design phase is reasonable.
+The usage of a Raspberry Pi 3 Model B in combination with the Audio-HAT is foreseen (for further explanation see section \ref{cap:TheoryPi}).
+In the following sections, the choice of hardware and software in order to fulfil the requirements is explained and reasoned.
+
+
+% Bild von der ersten Idee
+% Placed on Amp usw..
+% UML of component functions??
+
+\section{Hardware}
+
+\subsection{Case}
+All components of the unit are supposed to be placed in one 19-inch case.
+19-inch racks offer the advantage of mounting electronic devices into a standardized frame.
+In the field of recording studios or stage engineering, they are commonly used.
+Cases are available in different rack units $U$ defining the height.
+One $U$ is specified by 1,75inch.
+The used 19-inch case has $2U$ to provide enough space for the planned display (see \ref{DesignDisplay}).
+
+% Mounted in Rack 
+% 2HE for enough space for display
+% Plastic for easy modification
+%/ explain this choice
+
+
+\subsection{Preamp Module} \label{DesignPreamp}
+
+The input- and outputlevel of the Audio-HAT is designed for a reference voltage of 1\,V$_{\mathrm{RMS}}$ = 0\,dBV \cite[p.\,31]{Albers:2017}. As a consequence, the Audio-HAT is developed for the interaction with devices on consumer audio line level\,(see section \ref{cap:BasicsOfAudio}).
+Therefore a pre-amplifier\,(preamp) for the amplification from instrument level is reasonable to obtain a higher
+digital resolution and less quantization noise at the analog-digital conversion.
+
+In addition to that, a suitable voltage bridging is necessary to gain a maximum voltage level on the HAT input. The existing 10\,k$\Omega$ to 25\,k$\Omega$ output impedance from a regular guitar does not ideally match with the 16,753\,k$\Omega$ \cite[p.\,50]{Albers:2017} input impedance provided by the HAT.
+
+
+% DAS GEHT !!!!
+%\begin{wrapfigure}{r}{0.5\textwidth} 
+%  \begin{center}
+%    \includegraphics[width=0.35\textwidth]{banksy.jpg}
+%  \end{center}
+%  \caption{A gull}
+%\end{wrapfigure}
+
+The MXR-Micro Amp is a simple but efficient classical effect unit designed as a stompbox\,(figure \ref{fig:MicroAmp}).
+It is categorized  as a \textit{Boost} effect, which is a clean volume increaser without any modification of the sound. Taking the advantage of available schematics from the internet\,\cite{ElectroSmash:2017} the Micro Amp is used as a base for the preamp development.
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.35\textwidth]{banksy.jpg}
+	\caption[MicroAmp]{MXR Micro-Amp stompbox\footnotemark}
+	\label{fig:MicroAmp}
+\end{figure} 
+\footnotetext{URL: https://www.constantinecruz.com/product/mxr-m133-micro-amp-pedal/ [cited 28 August 2018]}
+
+The Micro Amp is designed in a non-inverting topology originally equipped with the operational amplifier TL061 \cite{Tl061:2015} by Texas Instruments. The main advantage of the TL061 is the very low power consumption, necessary for a battery operating stompbox.
+A very low power consumption is not needed, so this part is replaced by the low noise TL071ACP, which is often used for high-fidelity  and audio pre-amplifier applications \cite{Tl071:2017}.\\
+Table \ref{tab:OPAmpvergleich} shows a comparison in terms of slew rate $SR$, equivalent input 
+noise voltage $V_\mathrm{n}$ and THD to justify this choice.
+
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+\textbf{operational amplifier} & \textbf{$SR/ \frac{\mathrm{V}}{\mu \mathrm{s}}$} & $V_\mathrm{n} / \frac{\mathrm{nV}}{\sqrt{\mathrm{Hz}}}$ &\textbf{$\mathrm{THD}_{\%}$} \\ 
+\hline 
+\hline
+TL061 & 3,5 & 42 & no information \\ 
+\hline 
+TL071ACP & 13 & 18 & 0,003 \\ 
+\hline 
+\end{tabular}
+\caption{Comparsion of TL061 and TL071ACP operational amplifier}
+\end{center}
+\label{tab:OPAmpvergleich}
+\end{table}
+
+Besides the pre-amplification to adjust the guitar signal level for the Audio-HAT, the output signal of the HAT needs to be attenuated. The reduction of the voltage level from consumer audio line level back to instrument level is planned with a simple voltage divider.
+
+
+% Need to match signals... IN 6.3mm Out 3.5mm
+% Albers mentioned Line Level -> better SNR
+% Impedance matching
+% Same loudness
+
+
+\subsection{User Interface Module}\label{cap:designUI}
+
+On the front panel of the case, the user interaction takes places. 
+The Raspberry provides a 40 pin header for the interaction with external components.
+23 of the 40 pins are allocated for the communication with the Audio HAT\,\cite[p.\,99]{Albers:2017}. The remaining 17 pins can be used for the interconnecting with the user interface module via general purpose input/output (GPIO).
+
+\subsubsection{Display} \label{DesignDisplay}
+
+In regard to an easy use, a suitable display is required to visualize the current state of the effect unit.
+There is a vast amount of liquid crystal displays\,(LCD) available for the Raspberry Pi such as graphical displays, touch displays or dot-matrix text modules.\\
+The main selection criterion is the usability during live stage performances. Touch displays are a bad solution due to "sweaty" hands of a guitarist on stage. Graphical displays, with a resolution of 128x64 pixel or more, are not necessary because there are no complex graphics intend to visualize.
+For a simple navigation through the effects a text display is sufficient.
+Considering the word lengths to be displayed an appropriate resolution is 2x20 characters.
+Due to the difficult light conditions on stage, an LED background light is useful.
+\\
+\\
+For an easy communication with the Raspberry Pi the chosen LCD 202A BL\,\cite{LCD:2016} by Display Visions provides an integrated HD44780 controller. The interaction via GPIO is possible and libraries including pre-developed functions are available on the internet.
+The 5\,VDC supply voltage for the display is provided via GPIO.
+
+%\begin{figure}[H]
+%	\centering \includegraphics[width=0.35\textwidth]{banksy.jpg}
+%	\caption[LCDExample]{LCD 202A BL: LCD-Modul, 2x20 \cite{Missing 40}.}
+%	\label{fig:LCDExample}
+%\end{figure} 
+
+
+\subsubsection{Buttons and Switch} 
+
+For the Power ON/OFF control of the effect unit a simple 230\,V rocker switch with an
+imprinted I for ON and 0 for OFF is chosen. Besides that, two push buttons are required.
+One for the effect selection and the other one for shutting down the Pi.
+Both are foreseen to be connected via GPIO with the Pi, so the maximum switching voltage is
+in the extra-low voltage range (<120\,VDC). For a convenient usage on stage, the chosen buttons provide
+a snap-action mechanism for a tactile and audible feedback provoking a hearable "click".
+
+% Buttons "Snap action" good for user caused by feedback
+% switched Voltage / "Gewinde"
+% / explain this choice
+
+\subsubsection{Rotary Encoders} 
+
+As required, three parameters of each effect should be adjustable by the user.
+The modification of a parameter is simply interpreted as an increment or decrement of a value.
+The most user-friendly solutions are potentiometers or rotary encoders.
+The use of a potentiometer requires an extensive analog-to-digtal conversion. In addition to that, the
+potentiometer has an unavoidable memory effect caused by the turning position of the wiper.
+This would lead to implementation issues in terms of default values for the parameters.\\
+
+Hence, KY-040 rotary encoders (see figure \ref{fig:RotaryEncoder}) are used to fulfil the requirements.
+Already soldered on a small printed circuit board\,(PCB) and equipped with pull-up resistors, the rotary encoders can be directly connected via GPIO.
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.2\textwidth]{banksy.jpg}
+	\caption[RotaryEncoder]{KY-040 rotary encoder module\footnotemark}
+	\label{fig:RotaryEncoder}
+\end{figure} 
+\footnotetext{https://alltopnotch.co.uk/wp-content/uploads/imported/6/Rotary-Encoder-Module-KY-040-Brick-Sensor-Clickable-Switch-Arduino-ARM-PIC-UK-231884393106.JPG [cited 31 August 2018]}
+
+\subsection{Power Supply}
+
+According to the requirements stated before, the unit should be connected with the 230\,V electricity grid.
+The unit requires a 230\,V connection equipped with a protection-earth contact, caused by metallic electrically conductive parts\,(e.g. screws) touchable from the outside of the case.
+\\
+For the design of the power switching supply, the significant criteria are the lower supply voltages needed for the built-in components.
+The Raspberry Pi has a micro USB connection for the 5.1\,VDC operating voltage, covering the supply for the user interface via GPIO as well.
+The MXR Micro-Amp, on which the preamp module development is based, was originally  designed for a 9-volt battery.
+The operational amplifier is running with a bias voltage\,(virtual ground).
+According to the specification of the TL071ACP \citep{Tl071:2017} the recommended supply voltage for the total $V_{\mathrm{CC}}$ is between 10\,VDC and 30\,VDC.
+Therefore the desired power switching supply requires a minimum output voltage of 10\,VDC.
+For the further reduction of the voltage level for the Raspberry Pi, a DC-to-DC converter can be used.
+\\
+\\
+The electric power of the Raspberry Pi is about 5.1\,V\,$\cdot$\,2.5\,A = 12.75\,W \cite{Pi:2005}, the low power consumption of the preamp module can be neglected. Therefore the power switching supply requires a minimum output power about 13\,W.
+
+Table \ref{tab:PowerSupplyChoice} shows the chosen power supplies. The power switching supply MW LRS-35-12 by Mean Well with an output power of 35\,W is generously designed. This is reasonable in regard to possible further extensions such as the integration of a power amplifier. The step-down module LM2596 is designed for the direct connection to the power switching supply output, providing 5\,VDC for the Raspberry Pi.
+\\
+
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+\textbf{Type}  & \textbf{Input Voltage}  & \textbf{Output Voltage}  & \textbf{Output Current}  \\ 
+\hline 
+\hline
+MW LRS-35-12 & 85 - 264\,VAC   & 12\,VDC &  3\,A \\ 
+\hline 
+LM2596 & 3 - 35\,VDC & Adjustable 1.5 -35\,VDC &  3\,A \\ 
+\hline 
+\end{tabular} 
+\caption{Specification of used power supplies \cite{MWLRS35:2016}, \cite{DCDC:2017}}
+\end{center}
+\label{tab:PowerSupplyChoice}
+\end{table}
+
+\section{Software}
+
+The Raspberry Pi 3\,B (plus Audio Hat) is the core component of the effect unit, responsible for the control of the main
+features such as audio processing and user interaction.
+It is an advantage that the interacting components are all available during the development phase.
+That allows an efficient hardware-near programming. Therefore it is planned that the whole software implementation is realised directly on the Raspberry Pi with mouse, keyboard and monitor attached to it.\\
+Hence, cross-compiling from an external computer is not necessary.
+
+\subsubsection{Operating System}
+
+There are many different OS\,(Operating Systems) available for the Raspberry Pi.
+The official distribution \textit{Raspbian OS} is in direct competition to other systems like \textit{Windows 10 IoT Core} or \textit{Ubuntu Mate}.
+For the choice of the ideal OS for this thesis, the main focus is on user-friendliness and the availability
+of relevant information and tutorials. In addition to that, the OS should provide the fundament for a necessary IDE. The Linux Debian based \textit{Raspbian OS} is the most distributed operating system and supported by the Raspberry Pi foundation. Therefore it is chosen for the software developing process.
+% Raspbian is easy
+
+\subsubsection{Programming Language}
+
+As a consequence of the required minimum latency of the audio signal, a fast programming language is reasonable. \textit{C} or \textit{C++} are common solutions in terms of time-critical tasks in close-to-hardware programming. The planned programming language for this project is \textit{C}. The decision is made on the basis of significant advantages like available libraries for the display control and GPIO declaration. Moreover, the Audio-HAT demonstration program by Sebastian Albers \cite{Albers:2017}, which provides a good basis for further implementations, is written in \textit{C}.
+% C-Language cau
+% - Demo from ALbers avialable in C
+% - Minimize Latency
+% - Libraries of Components are in C
+% - Interrupt commom in Mü controler
+
+
+\subsubsection{Integrated Development Environment}
+
+As a suitable integrated development environment\,(IDE) the freeware \textit{Geany} is chosen.
+Running on Raspbian OS, \textit{Geany} is a simple but efficient program supporting a vast amount of programming languages including C. There are several plugins available, like a useful debugger or a syntax highlighting function. In fact, the program operates with very short load times, ideal for a hardware-near programming during test phases.
+% Available for Rasp
+% IDE Geany
+% Freeware
+% proggraimn lang include C
+% debugger  ans extensions
+
+
+
+

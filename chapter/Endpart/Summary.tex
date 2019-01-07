@@ -1,0 +1,39 @@
+%---------------------------------------------------------------------------------------------------
+% Summary
+%---------------------------------------------------------------------------------------------------
+\newpage
+%\part{Schluss}
+%\chapter{Schlussteil}
+%Berühmte letzte Worte...
+
+\chapter{Summary}
+% Redo Intruduction
+In this thesis, the goal of a fully working multi-effect unit is accomplished.
+A Raspberry Pi used in combination with the Audio-HAT performs the task of digital signal processing.\\
+Three exemplary guitar effects are implemented:
+A clean effect for an unchanged guitar sound, a delay effect with three adjustable parameters for a variety of echoing sounds and a distortion effect based on hard clipping.
+All guitar effects are verified on the basis of measurable and hearable results.
+
+Due to the development of a preamp module, the guitar signal is adjusted in an appropriate way.
+Hence, the input signal is amplified for an optimal interconnection with the Audio-HAT providing a THD+N of 0.006\,\%.
+The other way around the signal is attenuated for further processing by a guitar amplifier.
+
+The user interface allows the guitar player the total system control.
+Consisting of a bright LCD-Text display, rotary encoders and buttons the interface is suitable for stage usage.
+
+
+
+\subsubsection{Outlook}
+% Outlook: Backpanel
+%			- Line out  // mention in Test
+The concept of the effect unit offers a vast amount of possible extensions.\\
+On the hardware side, the unit can be equipped with a power amplifier, due to the generously designed power switching supply. The back panel leaves enough space for speaker connectors. For the interconnection with other
+audio devices like HIFI-Amplifiers or PC-Soundcards, a Line-Out via RCA connector sockets is reasonable.
+Suitable nominal voltages on consumer audio line level and impedances are available.
+Furthermore, the SW contact of the rotary encoders (high signal when the encoder is pressed) could be used for  extensions of the user controls.
+
+The implemented software can be extended by an arbitrary number of guitar effects.
+For further developments the source-code is commented at the relevant lines, highlighting good entry points. To provide a greater user-friendliness, it is reasonable to extend the user menu by displayed parameter names.
+As a final step, the combination of different effects might be a good idea to achieve an effect chain.
+
+

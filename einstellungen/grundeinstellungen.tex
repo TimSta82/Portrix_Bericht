@@ -1,0 +1,165 @@
+%---------------------------------------------------------------------------------------------------
+% Einstellungen
+% (gelten nur in Zusammenarbeit mit pdflatex)
+%---------------------------------------------------------------------------------------------------
+\documentclass[
+  pagesize,	                                           % flexible Auswahl des Papierformats
+  a4paper,  	                                         % DIN A4
+  oneside,    	                                       % einseitiger Druck
+  BCOR5mm,      	                                     % Bindungskorrektur
+  headsepline,                                         % Strich unter der Kopfzeile
+  12pt,                                                % 12pt Schriftgröße
+	halfparskip,                                         % Europäischer Satz: Abstand zwischen Absätzen
+	abstracton,																					 % Spezielle Formatierung, die erlaubt, dass die
+																											 % Zusammenfassung vor dem Inhaltsverzeichnis steht
+	%draft,																							 % Es handelt sich um eine Vorabversion	
+	final,																							 % Es handelt sich um die endgültige Version
+	liststotoc,																					 % Tabellen- und Abbildungsverzeichnis im 																																 % Inhaltsverzeichnis
+	idxtotoc,																						 % Index im Inhaltsverzeichnis	
+  bibtotoc,                                            % Literaturverzeichnis im Inhaltsverzeichnis  
+]{scrreprt}                                            % KOMA-Scriptklasse Report
+
+%---------------------------------------------------------------------------------------------------
+\usepackage[english,ngerman]{babel}                    % deutsche Trennmuster %KAY ngerman keinen einfluss auf ziel
+\usepackage{varwidth}                          % KAY !!
+\usepackage{wrapfig}                           % KAY !!
+\usepackage{color}                             % KAY !!
+\usepackage[T1]{fontenc}                               % EC-Schriften, Trennstellen nach Umlauten
+\usepackage[latin1]{inputenc}                          % direkte Umlauteingabe (ä statt "a)
+                                                       % latin1/latin9 für unixoide Systeme
+                                                       % (latin1 ist auch unter Win verwendbar)
+                                                       % ansinew für Windows
+                                                       % applemac Macs
+                                                       % cp850 OS/2
+\usepackage{times}              											 % Schriften Paket
+\usepackage{array,ragged2e} 													 % Wichtig für Abstandsformatierung
+
+%---------------------------------------------------------------------------------------------------
+\usepackage{cmbright}                                  % serifenlose Schrift als Standard
+                                                       % + alle für TeX benötigten mathematischen
+                                                       % Schriften einschließlich der AMS-Symbole
+\usepackage[scaled=.90]{helvet}                        % skalierte Helvetica als \sfdefault
+\usepackage{courier}                                   % Courier als \ttdefault
+
+%---------------------------------------------------------------------------------------------------
+\usepackage[automark]{scrpage2}                        % Anpassung der Kopf- und Fußzeilen
+\usepackage{xspace}                                    % Korrekter Leerraum nach Befehlsdefinitionen
+\usepackage{setspace}																	 % Dieses Package brauchen wir für den 				
+\usepackage[pdftex]{graphicx}
+\usepackage[absolute,overlay]{textpos}         
+\usepackage[final]{pdfpages}													 % anderthalbzeiligen Abstand.
+\usepackage[numbers]{natbib}                                    % Neuimplementierung des \cite-Kommandos
+\usepackage{bibgerm}       											       % Deutsche Bezeichnungen
+\usepackage[absolute]{textpos}                         % placing boxes at absolute positions
+\usepackage[final]{pdfpages}                           % include pages of external PDF documents
+\usepackage{tabularx}                                  % Spaltenbreite bis zur Seitenbreite dehnen
+\usepackage{makeidx}																	 % Paket zur Erstellung eines Stichwortverzeichnisses
+\makeindex																						 % Automatische Erstellung des Stichwortverzeichnis
+\usepackage[intoc,
+						english,
+						prefix]{nomencl}
+\makenomenclature
+
+%---------- Selbst hinzugefügt (Krystian Bolz)
+%\newcommand*{\SVG}{}																	% Comment out if SVG package is not correct available
+\newcommand{\figwidthoctave}{12.5cm}														% Figure Width for Octave Plots
+\newcommand{\figwidthgnuplot}{10cm}														% Figure Width for Gnuplot Plots
+
+\usepackage{acronym}																	% Acronym Umgebung für Abkürzungen
+\usepackage{amsmath}																	% Mathe Umgebung
+\numberwithin{equation}{chapter}											% Nummerierung der Formeln nach Kapiteln
+\usepackage{float}
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\usepackage{subfigure} % Mehrere Bilder nebeneinander
+\usepackage{forloop} % Für Schleife im Anhang
+\usepackage{listings} % Quellcode
+\usepackage{color} % Syntax Highlighting Quellcode
+
+\addto\captionsngerman{\renewcommand{\bibname}{Quellenverzeichnis}} % Neue Literaturverzeichnis Überschrift
+
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\lstset{
+  basicstyle=\small,
+  columns=fullflexible,
+  showstringspaces=false,
+  commentstyle=\color{gray}\upshape
+}
+
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  morekeywords={xmlns,version,type}% list your attributes here
+}
+
+\ifdefined\SVG
+\usepackage{svg}																			% Für Vektorgrafiken
+\fi
+
+%---------------------------------------------------------------------------------------------------
+ \usepackage{graphicx}                                 % Zur Einbindung von PDF-Bildern
+ \usepackage[colorlinks,															 % Einstellen und Laden des Hyperref-Pakets
+	pdftex,
+	bookmarks,
+	bookmarksopen=false,
+	bookmarksnumbered,
+	citecolor=black, % was blue
+	linkcolor=black, % was blue
+	urlcolor=black, % was blue
+	filecolor=black, % was blue
+	linktocpage,
+  pdfstartview=Fit,                                    % startet mit Ganzseitenanzeige    
+	pdfsubject={Multiagentensystemgestützte Clusteranalyse},
+	pdftitle={Bachelorthesis im Fachbereich Elektrotechnik \& Informatik an der HAW-Hamburg},
+	pdfauthor={Björn Jensen, http://www.mirou.de}]{hyperref}
+ \pdfcompresslevel=9
+ 
+%---------------------------------------------------------------------------------------------------
+% Inhaltsverzeichnis und Abschnittnummerierung
+%---------------------------------------------------------------------------------------------------
+\setcounter{secnumdepth}{2}   % Ich habe recht kurze Kapitel. Die sollen nicht durchnummeriert sein.
+\setcounter{tocdepth}{2}
+
+%---------------------------------------------------------------------------------------------------
+% Abbildungsverzeichnis
+%---------------------------------------------------------------------------------------------------
+\graphicspath{{grafiken/}}
+
+%---------------------------------------------------------------------------------------------------
+% Kopf- und Fußzeilen
+%---------------------------------------------------------------------------------------------------
+\pagestyle{scrheadings}
+\clearscrheadings
+\clearscrplain
+\clearscrheadfoot
+\ohead{\pagemark}
+\ihead{\headmark}
+
+%---------------------------------------------------------------------------------------------------
+% Neue Befehle
+%---------------------------------------------------------------------------------------------------
+\input{einstellungen/neuebefehle.sty}
+
+%---------------------------------------------------------------------------------------------------
+% Trennung
+%---------------------------------------------------------------------------------------------------
+\input{einstellungen/trennungen.sty}
+
+%---------------------------------------------------------------------------------------------------
+% Anpassung der Parameter, die TeX bei der Berechnung der Zeilenumbrüche verwendet:
+%---------------------------------------------------------------------------------------------------
+\tolerance 1414
+\hbadness 1414
+\emergencystretch 1.5em
+\hfuzz 0.3pt
+\widowpenalty=10000
+\vfuzz \hfuzz
+\raggedbottom

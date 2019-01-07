@@ -1,0 +1,255 @@
+%---------------------------------------------------------------------------------------------------
+% Realisierung
+%---------------------------------------------------------------------------------------------------
+\newpage
+\chapter{Realisierung}
+
+In diesem Kapitel wird die Umsetzung des Designs in ein lauffähiges Programm beschrieben und welche Erkenntnisse aus den erhobenen Daten gewonnen werden konnten.
+
+\section{Software}
+
+Dieses Kapitel beschreibt die Funktionen und die Bedienung der entwickelten \ac{GUI}.
+
+\subsection{Funktionen}
+
+Mit dem Programm ist es möglich den Messaufbau nach festlegen der Messparameter automatisiert zu bedienen. Das bedeutet, dass nach den Einstellungen zu Beginn der Messung keine weiteren Veränderungen am Messaufbau vorgenommen werden müssen.\newline
+Das Programm erlaubt es über verschiedene Parameter zu messen und deren Auswirkungen auswerten zu können. Das Programm lässt es zu die Sendeleistung des \ac{Reader}s zu variieren und das \ac{Tag} auf der XZ-Ebene zu drehen. Diese beiden Parameter bilden die wichtigsten Einstellungsmöglichkeiten.\newline
+Des Weiteren können verschiedene Verzögerungszeiten festgelegt werden. Ein Zeitparameter beschreibt wie lange das \ac{Tag} vor der beginnenden Kommunikation mit dem \ac{CW} Träger bestrahlt wird. Ein zweiter Parameter bestimmt die Erholzeit nach jeder Kommunikation in welcher keinerlei Leistung ausgesendet wird. Dadurch kann der Einfluss des Stützkondensators auf die Funktionalität des \ac{Tag}s untersucht werden. Dazu kann das \ac{Tag} im Bereich betrieben werden, in welchem die Kommunikation gerade fehlschlägt. Dann kann ermittelt werden, ob das \ac{Tag} keine Antwort sendet weil es die empfangenen Daten nicht dekodieren konnte, oder weil die Versorgungsenergie nicht mehr ausreicht. Dafür muss allerdings sichergestellt sein, dass das \ac{Tag} genügend Energie speichern kann um die Antwort senden zu können. Des Weiteren muss der \ac{Reader} empfindlich genug sein um die Antwort auch dekodieren zu können.\newline
+Außerdem können verschiedene Befehle gesendet werden um mögliche Unterschiede in der Erreichbarkeit des \ac{Tag}s feststellen zu können.
+
+
+\subsection{Bedienoberfläche}
+
+Im Folgenden wird näher auf die Bedienoberfläche des Programms eingegangen. Es wird erklärt wie das Programm zu bedienen ist und welche Funktionen ausgeführt werden.
+
+\subsubsection{Hauptfenster}
+
+Den wichtigsten Teil der Bedienoberfläche bildet das Hauptfenster welches in Abbildung \ref{fig:GUIMain} abgebildet ist. Im Folgenden werden die Elemente des Fensters erläutert.
+
+\paragraph{Menüleiste:}
+Über die Menüleiste können weitere Fenster geöffnet und Messparameter geladen oder gespeichert werden. Der Menüpunkt 'File' ermöglicht es die Messparameter als \ac{XML} Datei abzuspeichern oder zu laden. Beim Laden einer Datei wird sogleich überprüft ob die Vorgaben der eingestellten \ac{XSD} Datei eingehalten wurden und Warnungen bei Fehlern angezeigt. Unter 'Settings' können Einstellungen für den Messaufbau vorgenommen werden. Diese werden in Kapitel \ref{cap:ReSoBeSettings} näher erläutert. Im 'Help' Menüpunkt kann ein Fenster geöffnet werden welches allgemeine Informationen über den aktuell verbundenen \ac{Reader} bereitstellt. Außerdem ein Hilfe Fenster, in welchem unter anderen die erlaubten Tastenkombinationen beschrieben sind.
+
+\paragraph{Verbindungselemente:}
+Die Verbindungselemente bilden den oberen Teil des Fensterinhalts. Hier kann über die Comboboxen der angeschlossene \ac{Reader} gewählt und über den 'Connect' Button verbunden werden. Für den \ac{Reader} gibt es auch noch den 'Search Tag' Button mit dem kontrolliert werden kann, ob sich ein lesbares \ac{Tag} im Feld befindet. Über die zweite Combobox wird der Arduino verbunden. Dafür wird der virtuelle COM Port genutzt und eine serielle Verbindung zum Mikrocontroller aufgebaut.
+
+\paragraph{Messparameter:}
+Für alle einstellbaren Messparameter wurde ein Textfeld erzeugt welches es erlaubt den Messvorgang innerhalb der \ac{GUI} festzulegen. Alle Parameter in denen Zahlenwerte verfahren werden, haben ein Start, Step und ein End Textfeld. Hier kann der Start- und Endwert und die Schrittweite eingestellt werden. Durch die Wahl von positiven oder negativen Schrittweiten und den entsprechenden Start- und Endwerten kann das Programm den Parameter mit jedem Schritt höher oder niedriger setzen. Verfügbar sind hierbei die folgende Parameter:
+
+\begin{itemize}
+	\item Power: Sendeleistung in dBm
+	\item Angle: Winkel zwischen \ac{Reader}antenne und \ac{Tag} in Grad
+	\item Recovery Time: Erholzeit nach jeder Einzelbefehlsausführung in ms
+	\item Power \ac{CW}: Sendeleitung des vor jeder Messung erzeugten \ac{CW} Trägers in dBm
+	\item \ac{CW} Duration: Dauer eines \ac{CW} Trägers vor jeder Messung in ms
+\end{itemize}
+
+Für alle diese Parameter besteht die Möglichkeit die neben den Textfeldern platzierte Checkbox zu klicken. Dadurch werden die Schritt- und Endparameter Textfelder unveränderlich gemacht und der Startwert des Parameters wird über die gesamte Messung als Einstellung genutzt.\newline
+Des Weiteren stehen drei weitere Parameter zur Verfügung. Die Checkbox mit dem Titel 'Power Up Down' sorgt dafür, dass die Sendeleistung während der gesamten Messung vom Start- zum Endwert und vom End- zum Startwert verfahren wird. Dadurch lassen sich in einem Messdurchlauf mögliche Unterschiede nachweisen. Außerdem stehen Checkboxes welche unter dem Titel 'Commands' geführt sind zur Verfügung. Von diesen muss für jeden Messdurchlauf mindestens eine bestätigt sein, um den Befehl welcher in dem Messdurchlauf gefahren wird auszuwählen. Es können auch mehrere Befehle ausgewählt werden und diese werden dann alle unter den gleichen Bedingungen durchgeführt. In das 'Iterations' Textfeld kann eine Ganzzahl eingefügt werden welche festlegt, wie oft jede einzelne Messeinstellung durchgeführt werden soll.
+
+\paragraph{Zusätzliche Elemente:}
+Mit den untersten Elementen im Fenster kann der Messaufbau angesteuert werden. Der 'Calculate Duration' Button berechnet die ungefähre Messdauer. Für diese Funktion muss das Programm mit einem \ac{Reader} verbunden sein, da alle Befehle einmalig ausgeführt werden müssen um deren ungefähre Dauer zu ermitteln. Über den 'Start' Button wird die Messung gestartet und der Speicherort der \ac{CSV} Datei festgelegt. Mit der Checkbox vor diesem kann festgelegt werden ob die Auswertungsdatei gleich im Anschluss erstellt werden soll. Durch den 'Plot Data' Button ist es möglich eine \ac{CSV} Datei mit Daten einzulesen und einfache zwei- beziehungsweise dreidimensionale Graphen zu erstellen. Der 'Create PDF' Button erzeugt eine \ac{PDF} Datei mit den in der Konfigurationsdatei festgelegten Berechnung und legt alle Daten in einem Ordner ab welcher in dem Textfeld daneben benannt werden kann.
+
+\paragraph{Statusleiste:}
+Die Statusleiste hat drei Elemente. Ganz links wird angezeigt wie viele Messdurchläufe die eingestellten Parameter erzeugen und eine ungefähre Voraussage der Messdauer dargestellt werden. Das zweite Element zeigt Statusmeldungen an. Hier wird zum Beispiel angezeigt, wenn eine Messung gestartet wird ohne einen verbundenen Mikrocontroller oder die \ac{PDF} erstellt wurde. Das dritte Element ist eine Fortschrittsanzeige, in Form einer Progressbar, welche einen Indikator darstellt, wie viele der Messpunkte bereits durchlaufen wurden.
+
+\subsubsection{Einstellungsfenster}\label{cap:ReSoBeSettings}
+
+Unter diesem Punkt wird erklärt welche Einstellungen über das Einstellungsfenster vorgenommen werden können. Außerdem wird erläutert welchen Einfluss dies auf die Messung oder den Berechnungsablauf hat.
+
+\paragraph{Generell:}
+Unter diesem Reiter können generelle Einstellungen vorgenommen werden. Wie in Abbildung \ref{fig:GUISettingGeneral} zu sehen besteht das Fenster aus drei Textfeldern und einer Checkbox. Über die Textfelder werden die Referenzpfade für gnuplot, die \ac{XSD} Datei und die Graphen Konfigurationsdatei festgelegt. Der gnuplot Pfad wird für die erfolgreiche Erstellung der Graphen benötigt. Die \ac{XSD} Datei welche hier angegeben ist überprüft die Messparameter und die Graphen Konfigurationsdatei bestimmt welche Graphen erstellt werden sollen. Mit der Checkbox kann ausgewählt werden, dass der PC nach Beendigung der eigenständig herunterfährt.
+
+\paragraph{Setup:}
+Diese Einstellungen ermöglichen die Einstellung von Parametern zu dem Messaufbau welche nicht elektronisch ausgelesen werden können. In Abbildung \ref{fig:GUISettingSetup} ist das Fenster dargestellt. Hier kann die physikalische Entfernung zwischen \ac{Reader}antenne und Tag angegeben werden. Außerdem kann der Name der Antenne als Parameter für deren Eigenschaften eingefügt werden. Die 'Motor Recovery Time' bestimmt die Wartezeit des Programms nach dem Bewegen des Motors.
+
+\paragraph{RFID Reader:}
+In Abbildung \ref{fig:GUISettingRFIDR} ist die Oberfläche des Fensters abgebildet. Hier können weitere Einstellungen zum \ac{Reader} festgelegt werden welche für die Verbindung wichtig sind. Außerdem ist ein Textfeld freigegeben in welchem eine Nummer oder ein eindeutiger Name dem verwendeten \ac{Reader} zugeordnet werden kann.
+
+\section{Messungen}
+
+Es wird erklärt mit welchen Methoden die Messungen ausgewertet wurden und mit welchen Messparametersätzen gearbeitet wurde. Während der ersten Messungen wurde festgestellt, dass der vom PulsarMX übertragene \ac{RSSI} Wert nicht die Genauigkeit besitzt um für Berechnungen genutzt zu werden. Aus diesem Grund wird der Wert zwar in den Messdaten gespeichert aber während der Auswertung lediglich als Indikator für eine erfolgreiche oder fehlgeschlagene Kommunikation genutzt. 
+
+\subsection{Auswertungsmethoden}
+
+Es wurden zwei Auswertungsmethoden von zwei unterschiedlichen Messungen angewandt. Diese sollten die Berechnung der emulierten Antennendistanz überprüfen und die Strahlungscharakteristik der \acp{Tag} nachmessen können. Des Weiteren wurde eine Messreihe wiederholt um die Reproduzierbarkeit nachprüfen zu können.
+
+\subsubsection{Evaluierung der Entfernungsberechnung} 
+
+Um die Berechnung der emulierten Entfernung, welche in Kapitel \ref{cap:AnAuanAuswertung} beschrieben ist, mit dem Messaufbau zu überprüfen, sollten einige Kontrollmessungen durchgeführt werden. Diese Messungen sind definiert durch eine Veränderung der Sendeleistung und des Antennenabstandes. Alle anderen Parameter verändern sich nicht, so dass sie keinen Einfluss auf die Messung nehmen. Der Winkel ist auf 0 Grad festgelegt.\newline
+Nun wurde die \ac{Reader}antenne wurde auf der X-Achse an verschiedenen Stellen positioniert. Für jede Position wurde die Messung mit jeweils den gleichen Messparametern gefahren. Aus diesen Messungen ergibt sich nun ein Diagramm welches im Idealfall aus Funktionen besteht welche genau aufeinander liegen. Allerdings ist dies wegen der Auflösung der Sendeleistung von 1dB des PulsarMX nicht möglich. Daraus resultieren je nach Antennenabstand unterschiedliche emulierte Entfernungen wodurch jede Funktion unterschiedliche X-Achsen Werte besitzt. Es wird erwartet, dass die Funktionen nicht genau aufeinander liegen aber alle ungefähr den gleichen Verlauf haben. Wird vorausgesetzt, dass für eine erfolgreiche Kommunikation, mit gegebener Sendeleistung, mindestens 50\% der Befehle erfolgreich vom \ac{Reader} verarbeitet werden können, kann für jeden Antennenabstand der Übergang zu einer überwiegend fehlgeschlagenen Kommunikation als Bereich angegeben werden.\newline
+Um dies zu erreichen wird die letzte Distanz, bei welcher die Kommunikation überwiegend erfolgreich war und die darauf Folgende, gespeichert und grafisch in einem Koordinatensystem abgebildet. Im Idealfall überschneiden sich alle diese Bereiche, so dass alle Werte einen gemeinsamen X-Achsen Bereich definieren. Wenn dies der Fall ist kann gefolgert werden, dass die Entfernung ab welcher die Kommunikation überwiegend fehlschlägt, in diesem Bereich liegt. Zur Darstellung im Koordinatensystem werden auf der X-Achse die emulierten Distanzen aufgetragen und auf der Y-Achse die unterschiedlichen Antennendistanzen.\newline
+Wird für alle drei \acp{Tag} eine Distanz als Grenze festgelegt kann auf die Leistungsaufnahme des Chips zurückgerechnet werden. Dies kann durch Formel \ref{eq:FriisMod} erreicht werden. Hier sollte jedoch der Antennengewinn durch die im Transponderdesign angenommene Dämpfung ersetzt werden (Tabelle \ref{tab:TagDämpfung}). Daraus ergibt sich dann die Formel \ref{eq:FriisMod2}. Außerdem kann die Empfangsleistung in Watt aus der Empfangsleistung in dB umgerechnet werden. Aus den drei Werten könnte es möglich sein, eine Abschätzung abzugeben.\newline
+Für die Ergebnisse sollte jedoch des Weiteren eine Fehlerabschätzung abgegeben werden, um die Auswirkungen von Ungenauigkeiten zu überprüfen. Quellen für mögliche Ungenauigkeiten sind unter anderem die Sendeleistung, die Antennenimpedanz und Antennengewinn. Außerdem kann mit einer geringen Positionsungenauigkeit beim Platzieren der \ac{Reader}antenne gerechnet werden. Mithilfe das Fehlerfortpflanzungsgesetzes lässt sich aus Formel \ref{eq:FriisMod2},  Formel \ref{eq:FehlerLeistung} ableiten.\todo{Fehlerfortpflanzung von z.B. Ungenauigkeit der Sendeleistung}.
+
+\begin{equation}
+\boxed{
+	\begin{split}
+		P_{Tag}[dB] &= P_{Reader}[dB] + 1dBi - A_{Tag}[dB] \\\\
+			& \quad - 20 \cdot log_{10}\left(\dfrac{4\pi \cdot d[m] \cdot 868MHz}{c\left[\dfrac{m}{s}\right]}\right) - 2,4384dB
+	\end{split}
+}
+\label{eq:FriisMod2}
+\end{equation}
+
+\todo{Echo3 Antenne und SMA Kabel entfernt}
+
+\begin{equation}
+\boxed{
+	\begin{split}
+	\Delta A_{Tag}[dB] &= \left| \left( -20 \cdot \dfrac{ Re\{ Z_{Ant}\} }{\left(Re\{ Z_{Ant}\} + Re\{ Z_{Chip}\} \right)^2} \cdot \dfrac{1}{ln(10)} \right) \cdot \Delta Z_{Chip} \right| \\\\
+	& \quad + \left| \left( -20 \cdot \dfrac{-Re\{ Z_{Chip}\}}{\left(Re\{ Z_{Ant}\} + Re\{ Z_{Chip}\} \right)^2} \cdot \dfrac{1}{ln(10)} \right) \cdot \Delta Z_{Ant} \right|
+	\end{split}
+}
+\label{eq:FehlerAntAtt}
+\end{equation}
+
+\begin{equation}
+\boxed{
+	\begin{split}
+	\Delta P_{Tag}[dB] &= \Delta P_{Reader}[dB] +  \left|\Delta A_{Tag}[dB]\right| \\
+	& \quad + \left|\left(- 20 \cdot \dfrac{c\left[\dfrac{m}{s}\right]}{4\pi \cdot d[m] \cdot 868MHz} \cdot \dfrac{1}{ln(10)}\right) \cdot \Delta d[m]\right|
+	\end{split}
+}
+\label{eq:FehlerLeistung}
+\end{equation}
+
+\subsubsection{Evaluierung der Strahlungscharakteristik}
+
+Für die Evaluierung der Strahlungscharakteristik sollten die Messergebnisse mit den simulierten Strahlungsdiagrammen verglichen werden. Um dies zu erreichen, sollte sich bei den Messungen lediglich die Sendeleistung und der Winkel in der XZ-Ebene zwischen den Antennen verändern. Aus diesen Messdaten kann nun ebenfalls der Übergang von überwiegend erfolgreichen zu fehlerhaften Kommunikationen festgestellt werden. Wird nun in einem Graphen mit Polarkoordinaten auf der Achse die negative Differenz zur minimalen Sendeleistung berechnet und als Leistung in dB gespeichert (Formel \ref{eq:RadiationPatternEq}). Dieser Wert gibt nun an wie gut in diesem Winkel die \ac{Tag} zu \ac{Reader} Kommunikation funktioniert hat. Daraufhin können die Pegeldifferenzen mit den simulierten verglichen werden.\newline
+Diese Messung wird mit dem 'Read' und dem 'Write' Befehl durchgeführt. Diese sollten jedoch auf die Pegeldifferenzen keinen nennenswerten Einfluss haben. Es kann erwartet werden, dass unterschiedlich viele Messungen, aufgrund der unterschiedlichen Energieaufnahme, erfolgreich sein werden.
+
+\begin{equation}
+\boxed{G_{X~Achse} = min\left(G_{Sendelseistung}\right) - G_{Sendelseistung}}
+\label{eq:RadiationPatternEq}
+\end{equation}
+
+\subsubsection{Reproduzierbarkeit der Ergebnisse}
+
+Um die Reproduzierbarkeit der Ergebnisse nachzuweisen, wird die Messung zur Evaluierung der Strahlungscharakteristik ein zweites Mal durchgeführt werden. Diesmal jedoch mit zehn Messpunkten pro Einstellung. Daraufhin können beide Ergebnisse miteinander verglichen werden. Es wird erwartet, dass sich die Ergebnisse geringfügig unterscheiden. Für einen Nachweis der Reproduzierbarkeit sollte die Differenz beider Messungen maximal 1dB betragen, da dies die Auflösung des \ac{Reader}s ist.
+
+\subsection{Erhobene Daten}
+
+Um die Methoden anzuwenden wurden die Messungen welche für die Auswertung nötig sind durchgeführt und deren Ergebnisse analysiert.
+
+\subsubsection{Evaluierung der Entfernungsberechnung}
+
+Diese Messung wurde für alle drei verfügbaren \acp{Tag} durchgeführt. Da der \ac{CD}1s jedoch, wie erwartet, eine viel geringere Reichweite hat, wurden hier weniger Messungen durchgeführt. Alle Distanzwerte, zu welchen Messungen mit den unterschiedlichen \acp{Tag} gemacht wurden, sind in Tabelle \ref{tab:MessungEntfernung} aufgeführt. Für jedes \ac{Tag} wurde die Messung mit den drei verschiedenen Befehlen durchgeführt und das Ergebnis ist wie erwartet nicht ideal aber es lässt eine Tendenz erkennen wir zum Beispiel Abbildung \ref{fig:BD1sEntRea}. Der auf der Y-Achse eingetragene Wert wird hier als erfolgreich definiert, wenn die Funktion des \ac{LLS} die Rückmeldung einer erfolgreichen Kommunikation gibt. So wird für alle Messungen, mit gleichem Befehl und gleicher Sendeleistung, prozentual angegeben wie erfolgreich diese war. In den Messungen sind Ausreißer teilweise ebenfalls vorhanden wie in Abbildung \ref{fig:BD1sEntInv}.\newline
+Außerdem wurden Graphen erstellt welche die beiden Entfernungen abbildet um welche der prozentuale Wert das erste Mal unter 50\% fällt. Diese Bereiche sollten sich, wie erwähnt, idealerweise überschneiden. Hier ist auf der Y-Achse die Antennendistanz angegeben und die beiden Punkte markieren die berechnete Entfernung, zwischen welchen die Erfolgsquote unter 50\% gefallen ist.\newline
+Als maximaler Entfernungswert ab welchem die Kommunikation noch erfolgreich ist wurde die Minimalentfernung aller Bereiche gewählt. Dieser Wert spiegelt die Grenze am sichersten wieder (Tabelle \ref{tab:EntfernungsSchätzungMin}). Der Tabelle lässt sich des Weiteren entnehmen, dass der 'Write' Befehl des \ac{CD}1s \ac{Tag}s bei keiner der Entfernungen als erfolgreich definiert werden konnte. Wie erwartet, ist durch die erhöhte Energieaufnahme der \acp{Tag} beim Schreiben von Daten die Maximalentfernung für diesen Befehl geringer. Dieses Verhalten konnte mit allen drei \acp{Tag} nachgewiesen werden. 
+
+\begin{table}[H]
+	\begin{center}
+		\label{tab:MessungEntfernung}
+		\caption{Entfernungsmessung Distanzwerte}
+		\begin{tabular}{| l | r | r | r | r | r | r |}
+			\hline
+			Antennendesign & 37cm & 42cm & 47cm & 52cm & 57cm & 62cm \\ \hline \hline
+			BD1s & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+			CD1s & \checkmark & \checkmark & \checkmark & \checkmark & x & x \\
+			RD1s & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\label{tab:EntfernungsSchätzungMin}
+		\caption[Maximale Entfernung für eine überwiegend erfolgreiche Kommunikation]{Maximale Entfernung für eine überwiegend erfolgreiche Kommunikation bei 27dBm Sendeleistung im beschriebenen Messaufbau mit gefilterten Ausreißer Werten.}
+		\begin{tabular}{| l | r | r | r |}
+			\hline
+			Antennendesign & 'Inventory' & 'Read' & 'Write' \\ \hline \hline
+			BD1s & 74cm & 73cm & 58cm \\
+			CD1s & 47cm & 47cm & X \\
+			RD1s & 116cm & 114cm & 82cm \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\subsubsection{Abschätzung der Leistungsaufnahme des Chips}
+
+Mit den Werten aus Tabelle \ref{tab:EntfernungsSchätzung} kann durch Formel \ref{eq:FriisMod} die Leistungsaufnahme des Chips berechnet werden. 
+
+\begin{table}[H]
+	\begin{center}
+		\label{tab:LeistungsaufnahmeSchätzungMin}
+		\caption[Aus den Messungen errechnete Leistungsaufnahme]{Aus den Messungen errechnete Leistungsaufnahme}
+		\begin{tabular}{| l | r | r | r |}
+			\hline
+			Antennendesign & 'Inventory' & 'Read' & 'Write' \\ \hline \hline
+			BD1s & 156$\mu$W & 161$\mu$W & 254$\mu$W \\
+			CD1s & 158$\mu$W & 158$\mu$W & X \\
+			RD1s & 74$\mu$W & 78$\mu$W & 148$\mu$W \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\subsubsection{Evaluierung der Strahlungscharakteristik}
+
+Um die Strahlungscharakteristik der \acp{Tag} abzubilden, wurden die Messparameter auf 12dBm bis 27dBm in 1dB Schritten eingestellt. Des Weiteren wurde die minimale Winkelauflösung von 1,8 Grad in einem Bereich von -90 Grad bis 90 Grad eingestellt.\newline
+Für jede einzelne Einstellungen wurden 100 Messungen durchgeführt. Die Messung für eine Einstellung wurde für gelungen definiert, wenn über 50\% der Kommunikationen erfolgreich waren. Dieser Vorgang wurde für alle drei \acp{Tag} durchgeführt. Bei der folgenden Auswertung ist zu beachten, dass festgestellt wurde, dass für bestimmte Winkel die Kommunikation fehlschlägt obwohl Bereiche um diesen Winkel herum erfolgreich sind (Abbildung \ref{fig:StrahlSCEinbruch}). Diese Einbrüche wurden für den Vergleich mit den simulierten Werten nicht explizit betrachtet. Die Einbrüche lassen sich der Strahlungscharakteristik nicht einfach entnehmen (Abbildung \ref{fig:CD1sStrahlReadGnu}). Diese Störungen sind nicht reproduzierbar, treten aber häufiger auf. \todo{lassen sich auch Interferenzen zurück führen?}Da die Einbrüche im vom Programm erstellten Strahlungsdiagramm nicht angezeigt werden, ist zu empfehlen, beim Erstellen der Graphen auch immer die Polardarstellung der erfolgreichen Kommunikationen für die maximale Sendeleistung zu erstellen. Dieser Anzeige können Einbrüche schnell entnommen werden. Des Weiteren sollte aus den Tabellenwerten der Strahlungscharakteristik hervorgehen, dass die Schrittweite zwischen dem Maximal- und dem Minimalwinkel nicht immer gleich sind.\newline
+Für die Bewertung der Ergebnisse wurden die aus den Messwerten erstellten Daten in ein Polarkoordinatensystem zusammen mit den simulierten Werten eingetragen. Dafür wurde die Leistung bei 0 Grad von gemessenen zu den simulierten Werten gleich gesetzt \todo{normiert?}, da durch diese Messung lediglich die Leistungsdifferenzen der verschiedenen Winkel interessant und aussagekräftig sind. Außerdem wurde der Ablauf mit dem 'Read' und dem 'Write' Befehl durchlaufen.\newline
+Ein weiterer Graph berechnet den Betrag der Differenzen zwischen den gemessenen und simulierten Werten. Es wurde außerdem eine Grenze bei 1dB eingetragen, da dies die Auflösung des \ac{Reader}s ist. Die Grenze definiert so den Bereich in welchem Schwankungen zu erwarten sind. Beispielhaft für die Auswertungen sind hier Abbildung \ref{fig:CD1sStrahlDiffRead} und Abbildung \ref{fig:CD1sStrahlRead} abgebildet.\newline
+Den Abbildungen lässt sich entnehmen, dass die gesetzte Grenze von 1dB nicht immer unterschritten wurde. Daraus lässt sich schlussfolgern, dass die Messkammer im aktuellen Aufbau keine idealen Messbedingungen herstellt. Die Asymmetrie in den Abweichungen könnte außerdem ein Hinweis darauf sein, dass die Messkammer in der aktuellen Konfiguration kein symmetrische Dämpfung besitzt.
+
+\begin{figure}[H]
+	\centering \includegraphics[width=\figwidthgnuplot]{Messungen/CD1s/plot_polar_radiation_pattern_read_ext_anglectrllong2.pdf}
+	\caption[CD1s Strahlungsdiagramm 'Read']{Beispiel eines Strahlungsdiagramms, welches das Programm erstellen kann.}
+	\label{fig:CD1sStrahlReadGnu}
+\end{figure}
+
+\begin{figure}[H]
+	\centering \includegraphics[width=\figwidthgnuplot]{Messungen/CD1s/plot_polar_radiation_pattern_write_anglectrllong2.pdf}
+	\caption[CD1s erfolgreiche Kommunikationen in Polarkoordinaten]{CD1s erfolgreiche Kommunikationen in \% in Polarkoordinaten mit 'Write' Befehl. Beispielhafte Abbildung von Kommunikationseinbrüchen. Erstellt mit der programmierten GUI.}
+	\label{fig:StrahlSCEinbruch}
+\end{figure}
+
+\begin{figure}[H]
+	\centering \includegraphics[trim={0 6.5cm 0 7cm}, clip, width=\figwidthoctave]{Messungen/CD1s/StrahlungscharakteristikReadDiff.pdf}
+	\caption[CD1s Strahlungsdiagramm Differenz]{CD1s Strahlungsdifferenz von simulierten zu gemessenen Werten.}
+	\label{fig:CD1sStrahlRead}
+\end{figure}
+
+\begin{figure}[H]
+	\centering \includegraphics[trim={0 6.5cm 0 7cm}, clip, width=\figwidthoctave]{Messungen/CD1s/StrahlungscharakteristikRead.pdf}
+	\caption[CD1s Strahlungsdiagramm Read]{CD1s Strahlungscharakteristik der simulierten und gemessenen Werte. Gemessen mit dem 'Read' Befehl.}
+	\label{fig:CD1sStrahlDiffRead}
+\end{figure}
+
+\subsection{Reproduzierbarkeit der Ergebnisse}
+
+Um die Reproduzierbarkeit der Ergebnisse zu überprüfen, wurde die Messung für die Strahlungscharakteristik ein zweites Mal mit zehn Messungen pro Einstellung durchgeführt. Daraufhin wurden die Ergebnisse beider Messungen miteinander verglichen.\newline
+Den Abbildungen kann entnommen werden, dass beide Messungen sehr ähnliche Ergebnisse liefern. Eine komplette Übereinstimmung der Daten war nicht zu erwarten. In Abbildung \ref{fig:BD1sStrahlRead2} sind diese geringen Unterschiede beispielhaft durch eine Messung mit dem 'Read' Befehl am \ac{BD}1s \ac{Tag} zu erkennen.
+
+\begin{table}[H]
+	\begin{center}
+		\label{tab:Strahlungsdiagramme}
+		\caption{Strahlungsdiagramme der Tags mit zwei Messungen}
+		\begin{tabular}{| l | r | r |}
+			\hline
+			Antennendesign & 'Read' & 'Write' \\ \hline \hline
+			BD1s & \ref{fig:BD1sStrahlRead2} & \ref{fig:BD1sStrahlWrite2} \\
+			CD1s & \ref{fig:CD1sStrahlRead2} & \ref{fig:CD1sStrahlWrite2} \\
+			RD1s & \ref{fig:RD1sStrahlRead2} & \ref{fig:RD1sStrahlWrite2} \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+\begin{table}[H]
+	\begin{center}
+		\label{tab:StrahlungsdiagrammDifferenzen}
+		\caption{Strahlungsdiagramm Differenzen zur Simulation der Tags mit zwei Messungen}
+		\begin{tabular}{| l | r | r |}
+			\hline
+			Antennendesign & 'Read' & 'Write' \\ \hline \hline
+			BD1s & \ref{fig:BD1sStrahlReadDiff2} & \ref{fig:BD1sStrahlWriteDiff2} \\
+			CD1s & \ref{fig:CD1sStrahlReadDiff2} & \ref{fig:CD1sStrahlWriteDiff2} \\
+			RD1s & \ref{fig:RD1sStrahlReadDiff2} & \ref{fig:RD1sStrahlWriteDiff2} \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+

@@ -1,0 +1,290 @@
+%---------------------------------------------------------------------------------------------------
+% Appendix
+%---------------------------------------------------------------------------------------------------
+\newpage
+%\part{Anfang}
+\chapter{Appendix}
+
+\section{Attached CD}\label{DVD}
+
+Additional attachment is stored on a CD.\\
+The CD is deposited with examiner Prof. Dr. Robert Hess and contains the following material:
+
+\begin{center} 
+   \begin{varwidth}{7in} 
+      \begin{itemize} 
+      	 \item PDF version of Bachelorthesis 
+         \item EAGLE project files of all PCB layouts and schematics
+         \item Collection of all implemented source codes
+         \item Audio recordings of clean, delay and distortion effects
+      \end{itemize} 
+   \end{varwidth} 
+\end{center} 
+
+\newpage
+\section{Total Schematic of Effect Unit}
+
+Figure \ref{fig:UMLoverall} shows the total schematic of the device.
+The detailed pin assignment of the Audio-HAT and Raspberry Pi is documented in the bachelor thesis of Sebastian Albers\,\cite[p.\,99]{Albers:2017}.
+
+\begin{figure}[H]
+	\centering \includegraphics[width=1\textwidth]{banksy.jpg}
+	\caption[UMLoverall]{Schematic of total effect unit}
+	\label{fig:UMLoverall}
+\end{figure} 
+
+\section{Delay Effect Measurements}\label{DelayAppendix}
+
+\subsubsection{Influence of Time Parameter}
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.75\textwidth]{banksy.jpg}
+	\caption[Menu]{Delay-measurement with \textit{level=5}; \textit{decay=5}; \textit{time=0}}
+	\label{fig:DelayExemptime550}
+\end{figure}
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.75\textwidth]{banksy.jpg}
+	\caption[Menu]{Delay-measurement with \textit{level=5}; \textit{decay=5}; \textit{time=5}}
+	\label{fig:DelayExemptime555}
+\end{figure}
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.75\textwidth]{banksy.jpg}
+	\caption[Menu]{Delay-measurement with \textit{level=5}; \textit{decay=5}; \textit{time=10}}
+	\label{fig:DelayExemptime5510}
+\end{figure}
+
+\subsubsection{Influence of Decay Parameter}
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.75\textwidth]{banksy.jpg}
+	\caption[Menu]{Delay-measurement with \textit{level=5}; \textit{decay=0}; \textit{time=5}}
+	\label{fig:DelayExempdecay550}
+\end{figure}
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.75\textwidth]{banksy.jpg}
+	\caption[Menu]{Delay-measurement with \textit{level=5}; \textit{decay=5}; \textit{time=5}}
+	\label{fig:DelayExempdecay555}
+\end{figure}
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.75\textwidth]{banksy.jpg}
+	\caption[Menu]{Delay-measurement with \textit{level=5}; \textit{decay=10}; \textit{time=5}}
+	\label{fig:DelayExempdecay5510}
+\end{figure}
+
+\subsubsection{Influence of Level Parameter}
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.75\textwidth]{banksy.jpg}
+	\caption[Menu]{Delay-measurement with \textit{level=0}; \textit{decay=5}; \textit{time=5}}
+	\label{fig:DelayExemplevel550}
+\end{figure}
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.75\textwidth]{banksy.jpg}
+	\caption[Menu]{Delay-measurement with \textit{level=5}; \textit{decay=5}; \textit{time=5}}
+	\label{fig:DelayExemplevel555}
+\end{figure}
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.75\textwidth]{banksy.jpg}
+	\caption[Menu]{Delay-measurement(1) with \textit{level=10}; \textit{decay=5}; \textit{time=5}}
+	\label{fig:DelayExemplevel5510}
+\end{figure}
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.75\textwidth]{banksy.jpg}
+	\caption[Menu]{Delay-measurement(2) with \textit{level=10}; \textit{decay=5}; \textit{time=5}}
+	\label{fig:DelayExemplevel5510}
+\end{figure}
+
+
+
+\section{Distortion Effect Measurements}\label{DistortionAppendix}
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\captionof{figure}{Measurement of threshold(left) and adjusted level(right) - ParameterValue 0.}
+\end{figure}
+
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\captionof{figure}{Measurement of threshold(left) and adjusted level(right) - ParameterValue 1.}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\captionof{figure}{Measurement of threshold(left) and adjusted level(right) - ParameterValue 2.}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\captionof{figure}{Measurement of threshold(left) and adjusted level(right) - ParameterValue 3.}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\captionof{figure}{Measurement of threshold(left) and adjusted level(right) - ParameterValue 4.}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\captionof{figure}{Measurement of threshold(left) and adjusted level(right) - ParameterValue 5.}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\captionof{figure}{Measurement of threshold(left) and adjusted level(right) - ParameterValue 6.}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\captionof{figure}{Measurement of threshold(left) and adjusted level(right) - ParameterValue 7.}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\captionof{figure}{Measurement of threshold(left) and adjusted level(right) - ParameterValue 8.}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\captionof{figure}{Measurement of threshold(left) and adjusted level(right) - ParameterValue 9.}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\end{minipage}
+\captionof{figure}{Measurement of threshold(left) and adjusted level(right) - ParameterValue 10.}
+\end{figure}
+
+
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\captionof{figure}{FFT - ParameterValue 0}
+\label{fig:THD_app0}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\captionof{figure}{FFT - ParameterValue 1}
+\label{fig:THD_app1}
+\end{minipage}
+
+
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\captionof{figure}{FFT - ParameterValue 2}
+\label{fig:THD_app2}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\captionof{figure}{FFT - ParameterValue 3}
+\label{fig:THD_app3}
+\end{minipage}
+
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\captionof{figure}{FFT - ParameterValue 4}
+\label{fig:THD_app4}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\captionof{figure}{FFT - ParameterValue 5}
+\label{fig:THD_app5}
+\end{minipage}
+
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\captionof{figure}{FFT - ParameterValue 6}
+\label{fig:THD_app6}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\captionof{figure}{FFT - ParameterValue 7}
+\label{fig:THD_app7}
+\end{minipage}
+
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\captionof{figure}{FFT - ParameterValue 8}
+\label{fig:THD_app8}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\captionof{figure}{FFT - ParameterValue 9}
+\label{fig:THD_app9}
+\end{minipage}
+
+\begin{minipage}[t]{0.5\textwidth}
+\includegraphics[width=\textwidth]{banksy.jpg}
+\captionof{figure}{FFT - ParameterValue 10}
+\label{fig:THD_app10}
+\end{minipage}

@@ -1,0 +1,47 @@
+%---------------------------------------------------------------------------------------------------
+% Analyse
+%---------------------------------------------------------------------------------------------------
+\newpage
+\chapter{Requirements}
+% fully working Prototype as standard alone device
+% hearable usufull effects, measured !!
+% in two sections SW HW
+
+The goal of this thesis is to develop a multi-effects unit for electric guitars.
+This device should be able to modify an electric guitar's signal according to the required 
+effect. As a deliverable, the result should be hearable and measurable.
+Designed as a prototype development this project should also show potential improvements for
+further development. 
+The requirements are split up into the hardware and software demands.
+
+\section{Hardware}
+
+All components of the unit should be placed in a 19-inch case designed for standardized mounting
+in a 19-inch rack.
+The unit is supposed to use only one power supply from the 230\,V electricity  grid.
+The digital signal processing shall be done by a Raspberry Pi in combination with the Audio-HAT developed by Sebastian Albers \cite{Albers:2017}. 
+For the signal in- and output, the device should be equipped with two common standard 6,3\,mm audio jacks on the front panel. That allows an easy interconnection with an electric guitar and a guitar amplifier.
+In regard to limit the application range, for this development cycle only input signals from passive six-string electric guitars are to be used. Other instruments like electric basses and keyboards are excluded from testing.
+In addition to that, a development of a preamp module is necessary for the adjustment from instrument level to the line level of the Audio-HAT's input. The effect unit itself shall not change the loudness of the signal from input to output.
+For the user control, a suitable user interface should be mounted on the front panel.
+
+
+\section{Software}
+
+To demonstrate the audio signal processing capabilities of the Pi in combination with the Audio-HAT, three exemplary guitar effects should be implemented:
+A clean, delay and distortion effect according to the hearable and measurable specifications\,(\ref{tab:guitarEffects}).
+To control these effects a menu depending on the signals from the user interface should be implemented.
+Required features are:
+
+\begin{center} 
+   \begin{varwidth}{4in} 
+      \begin{itemize} 
+      	 \item Visualize current settings on a display 
+         \item Switching to another effect
+         \item Change three parameters of the effect
+      \end{itemize} 
+   \end{varwidth} 
+\end{center} 
+
+The unit is not supposed to provide a function to combine the effects with each other.
+In order to achieve a good stage performance, the maximum latency of the unit from input to output should not be more than $\Delta$t = 10\,ms.
