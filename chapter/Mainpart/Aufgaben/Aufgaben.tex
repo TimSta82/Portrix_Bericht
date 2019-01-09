@@ -13,6 +13,7 @@ Die Entwicklung der App erfolgt nach Rücksprache mit dem Vertreter von H2 Mobili
 
 \subsection{Feedback}
 Über InVision kam die Vorgabe einen Prototyp zu entwickeln, der es ermöglicht einer konkret ausgewählten Tankstelle per Knopfdruck ein Feedback zu geben.
+
 \begin{figure}[H]
 	\centering \includegraphics[width=0.8\textwidth]{feedbackPrototyp.png}
 	\caption[FeedbackPrototyp]{Prototyp der InVision Vorgabe. Feedback Button f\"ur konkret ausgew\"ahlte Tankstelle}
@@ -23,6 +24,14 @@ Die Entwicklung der App erfolgt nach Rücksprache mit dem Vertreter von H2 Mobili
 
 In der bisherigen Version war es m\"oglich \"uber eine Knopf in der FuelStationsMap.java (MainActivity) das HelpAndFeedback.java (Fragment) aufzurufen und von dort in ein allgemeine Feedback.java (Fragment) zu kommen. Dort l\"asst sich aus einem Spinner, der jede Tankstelle auflistet, eine Tankstelle ausw\"ahlen. Es war also naheliegend den Code zu modifizieren, um aus der FuelStationDetail.java (Activity) direkt in das Feedback.java zu wechseln und die angew\"ahlte Tankstelle direkt im Spinnerfeld anzuzeigen.
 Hierzu mussten diverse \"Anderungen vorgenommen werden, da das Feedback.java der darunterliegenden FuelStationsMap.java gehört und in der OnCreate() Methode des Feedback.java eine FuelStationsMap Variable als Context initialisiert wird (\ref{code:onCreate}). Dieser Context gew\"ahrleistet unter anderem das der Spinner im Feedback Fragment mit Tankstellen Daten gef\"ullt werden kann. Der Context macht es allerdings unm\"oglich das Feedback.java von einer weiteren Activity, also der FuelStationDetail.java gestartet wird. Es war daher notwendig die FuelStationDetail.java (Activity) als Fragment nachzubauen. 
+Der gew\"unschte workflow wird in Abb.(\ref{fig:inVisionFeedbackPrototyp}) dargestellt.
+
+\begin{figure}[H]
+	\centering \includegraphics[width=0.8\textwidth]{inVisionFeedbackPrototyp.png}
+	\caption[inVisionFeedbackPrototyp]{Workflow der neuen Feedback Funktion}
+	\label{fig:inVisionFeedbackPrototyp}
+\end{figure}
+
 
 \fbox{
 \lstinputlisting[label={code:onCreate} ,caption={onCreate() Methode der Feedback.java},captionpos=b, language = java]{program/Feedback.java}
