@@ -1,0 +1,30 @@
+<!-- 																						-->
+	<FrameLayout
+		android:id="@+id/lyFeedbackPin"
+		style="@style/FuelStationDetail.ValueContainer">
+
+		<ImageView
+			android:id="@+id/ivFeedbackPin"															
+			android:layout_width="wrap_content"
+			android:layout_height="16dp"
+			android:layout_marginTop="27dp"
+			android:src="@drawable/ic_feedback_mail_pin"
+			android:contentDescription="@string/feedback_mail_pin" 								/>
+
+		<de.h2.mobility.app.h2live.common.TextViewWithFont
+			android:id="@+id/tvFeedbackPin"
+			style="@style/FuelStationDetail.ValueLabel"
+			tools:text="Feedback zu dieser Tankstelle" />
+
+		<ImageView
+			android:id="@+id/ivFeedbackPinArrow"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="end|center_vertical"
+			android:src="@drawable/ic_cta_arrow_right_pin"
+			android:contentDescription="@string/cta_arrow_right_pin" />
+
+
+		<View style="@style/FuelStationDetail.ValueSeparator" />
+
+	</FrameLayout>
