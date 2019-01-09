@@ -1,0 +1,31 @@
+<div class="raster-wrapper ">
+    
+    <div class="raster float"><div class="inner">
+
+		<div class="fit"><div class="inner"> 
+		
+		    <button type="button" class="btn" onclick="disableGoogleAnalytics()" 
+			style="margin-bottom: 50px;"> Google Analytics Deaktivieren </button>
+		    
+		</div></div>
+	</div></div>
+</div>
+<script>
+
+    var disableGoogleAnalytics = function () {
+        jQuery(".btn").prop( "disabled", true ).text("Sendet...");
+        
+        try {
+            if (typeof googleAnalytics !== 'undefined') {
+                googleAnalytics.postMessage(JSON.stringify({"action":"optOut"}));
+            } else {
+                window.webkit.messageHandlers.googleAnalytics.postMessage({"action":"optOut"});
+            }
+        } catch(err) {
+            console.log("could not disable google analytics, maybe you don't have an iOS device.")
+        }
+        
+        jQuery(".btn").prop( "disabled", false ).text('Google Analytics Deaktivieren');
+    }
+        
+</script>
